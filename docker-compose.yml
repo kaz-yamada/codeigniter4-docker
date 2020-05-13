@@ -10,11 +10,11 @@ services:
         image: atsanna/codeigniter4:latest
         container_name: 'codeigniter4'
         ports:
-          - 80:80
+          - 8001:80
         links:
-          - codeigniter4_mysql
+          - ${DB_HOST}
         volumes:
-          - ./localfolder/www:/var/www/html
+          - ./src/www:/var/www/html
 
 #--------------------------------------------------------------------------#
 #--------------------------------------------------------------------------#
@@ -23,17 +23,17 @@ services:
 #--------------------------------------------------------------------------#               
     codeigniter4_mysql:
         image: mysql:8.0.20
-        container_name: 'codeigniter4_mysql'
+        container_name: ${DB_HOST}
         ports:
           - 3306:3306
         volumes:
-          - ./localfolder/mysql:/var/lib/mysql
-          - ./localfolder/logs/mysql:/var/log/mysql
+          - ./src/mysql:/var/lib/mysql
+          - ./src/logs/mysql:/var/log/mysql
         environment:
           MYSQL_ROOT_PASSWORD: rootpassword
-          MYSQL_DATABASE: codeigniter4
-          MYSQL_USER: codeigniter4
-          MYSQL_PASSWORD: codeigniter4
+          MYSQL_DATABASE: ${DB_DATABASE}
+          MYSQL_USER: ${DB_USER}
+          MYSQL_PASSWORD: ${DB_PASSWORD}
 
 #--------------------------------------------------------------------------#
 #--------------------------------------------------------------------------#
@@ -42,13 +42,13 @@ services:
 #--------------------------------------------------------------------------#             
     codeigniter4_phpmyadmin:
         image: phpmyadmin/phpmyadmin:5.0.2
-        container_name: 'codeigniter4_phpmyadmin'
+        container_name: ${DB_DATABASE}
         links:
-          - codeigniter4_mysql
+          - ${DB_HOST}
         environment:
-          PMA_HOST: codeigniter4_mysql
+          PMA_HOST: ${DB_HOST}
           PMA_PORT: 3306
         ports:
-          - 81:80
+          - 8002:80
         volumes:
-          - ./localfolder/sessions:/sessions
+          - ./src/sessions:/sessions

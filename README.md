@@ -31,7 +31,7 @@ docker build . -t codeginiter:4.0.3
 
 start the container:
 ```
-docker container run --publish 80:80 --name ci4 -v /localfolder:/var/www/html codeginiter:4.0.3
+docker container run --publish 8001:80 --name ci4 -v /src:/var/www/html codeginiter:4.0.3
 ```
 
 ## Installation

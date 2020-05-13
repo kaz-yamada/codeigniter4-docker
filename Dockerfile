@@ -1,7 +1,9 @@
-FROM php:7.2.30-apache
+FROM php:7.3-apache
 
-MAINTAINER Antonio Sanna <atsanna@tiscali.it>
+# MAINTAINER Antonio Sanna <atsanna@tiscali.it>
+LABEL maintainer="kaz.yamada@outlook.com"
 
+# Update Linux
 RUN apt-get update
 RUN apt-get upgrade -y
 
@@ -27,6 +29,7 @@ RUN chmod +x /startScript.sh
 
 RUN cd /var/www/html
 
+# Install Codeigniter 4 via composer
 RUN composer create-project codeigniter4/appstarter codeigniter4 v4.0.3
 RUN chmod -R 0777 /var/www/html/codeigniter4/writable
 
